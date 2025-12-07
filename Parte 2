@@ -1,0 +1,115 @@
+✅ PARTE 2 — CARDS + PAINÉIS + TABELAS + BOTÕES
+    private JPanel criarCard() {
+        JPanel card = new JPanel(new BorderLayout());
+        card.setBorder(new EmptyBorder(20, 20, 20, 20));
+        card.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(new Color(160, 160, 160), 2, true),
+                new EmptyBorder(20, 20, 20, 20)
+        ));
+        return card;
+    }
+
+    private JPanel criarPainelParametros() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.insets = new Insets(20, 10, 20, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1;
+
+        JLabel titulo = new JLabel("Parâmetros da Aposta");
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 32));
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(titulo, gbc);
+
+        gbc.gridy++;
+        panel.add(new JLabel("Números escolhidos (15 a 25):"), gbc);
+
+        cbNumeros = new JComboBox<>();
+        for (int i = 15; i <= 25; i++) cbNumeros.addItem(i);
+        estilizarCampo(cbNumeros);
+        gbc.gridy++;
+        panel.add(cbNumeros, gbc);
+
+        gbc.gridy++;
+        panel.add(new JLabel("Pessoas no bolão (1 a 40):"), gbc);
+
+        cbPessoas = new JComboBox<>();
+        for (int i = 1; i <= 40; i++) cbPessoas.addItem(i);
+        estilizarCampo(cbPessoas);
+        gbc.gridy++;
+        panel.add(cbPessoas, gbc);
+
+        gbc.gridy++;
+        panel.add(new JLabel("Quantidade de bilhetes:"), gbc);
+
+        spBilhetes = new JSpinner(new SpinnerNumberModel(1, 1, 9_999_999, 1));
+        estilizarCampo(spBilhetes);
+        gbc.gridy++;
+        panel.add(spBilhetes, gbc);
+
+        gbc.gridy++;
+        JButton btnCalcular = criarBotaoModerno("CALCULAR");
+        btnCalcular.addActionListener(e -> calcular());
+        panel.add(btnCalcular, gbc);
+
+        return panel;
+    }
+
+    private JPanel criarPainelResultado() {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        txtResultado = new JTextArea();
+        txtResultado.setEditable(false);
+        txtResultado.setLineWrap(true);
+        txtResultado.setWrapStyleWord(true);
+        txtResultado.setBackground(new Color(245, 247, 250));
+        txtResultado.setFont(new Font("Consolas", Font.PLAIN, 26));
+        txtResultado.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        JScrollPane scrollResultados = new JScrollPane(txtResultado);
+
+        curiosidadesModel = new DefaultTableModel(new Object[]{"Curiosidade", "Valor"}, 0);
+        tabelaCuriosidades = new JTable(curiosidadesModel);
+        estilizarTabela(tabelaCuriosidades);
+
+        estatisticasModel = new DefaultTableModel(
+                new Object[]{"Evento", "Evento Aproximado", "Probabilidade"}, 0
+        );
+        tabelaEstatisticas = new JTable(estatisticasModel);
+        estilizarTabela(tabelaEstatisticas);
+
+        JScrollPane scrollCuriosidades = new JScrollPane(tabelaCuriosidades);
+        JScrollPane scrollEstatisticas = new JScrollPane(tabelaEstatisticas);
+
+        JTabbedPane tabs = new JTabbedPane();
+        tabs.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        tabs.addTab("Resultados", scrollResultados);
+        tabs.addTab("Curiosidades", scrollCuriosidades);
+        tabs.addTab("Estatísticas", scrollEstatisticas);
+
+        panel.add(tabs, BorderLayout.CENTER);
+        return panel;
+    }
+
+    private void estilizarTabela(JTable tabela) {
+        tabela.setFont(new Font("Segoe UI", Font.PLAIN, 26));
+        tabela.setRowHeight(42);
+        tabela.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 30));
+    }
+
+    private JButton criarBotaoModerno(String texto) {
+        JButton btn = new JButton(texto);
+        btn.setForeground(Color.WHITE);
+        btn.setBackground(new Color(70, 0, 180));
+        btn.setBorder(new EmptyBorder(20, 40, 20, 40));
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 32));
+        return btn;
+    }
+
+    private void estilizarCampo(JComponent cmp) {
+        cmp.setBorder(new LineBorder(Color.GRAY, 2, true));
+        cmp.setPreferredSize(new Dimension(280, 50));
+    }
