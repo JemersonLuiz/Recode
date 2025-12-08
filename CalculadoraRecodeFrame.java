@@ -92,3 +92,4 @@
         SwingUtilities.invokeLater(() -> new CalculadoraRecodeFrame().setVisible(true));
     }
 }
+
