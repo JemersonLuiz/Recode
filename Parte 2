@@ -1,4 +1,4 @@
-✅ PARTE 2 — CARDS + PAINÉIS + TABELAS + BOTÕES
+// PARTE 2 — CARDS + PAINÉIS + TABELAS + BOTÕES
     private JPanel criarCard() {
         JPanel card = new JPanel(new BorderLayout());
         card.setBorder(new EmptyBorder(20, 20, 20, 20));
